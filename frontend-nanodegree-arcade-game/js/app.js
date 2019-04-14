@@ -164,7 +164,6 @@ let allEnemies = [];
 
 game.cloneHero(game.amountEnemies);
 
-
 allEnemies.map(item => {
   item.setPosition(generateNumbers(300));
   item.setSpeed(generateNumbers(5));
