@@ -1,10 +1,26 @@
+import helpers from './helpers';
+
 class Rectangle {
-    constructor(x1, x2, y1, y2) {
-        this.x1 = x1,
-        this.x2 = x2,
-        this.y1 = y1,
-        this.y2 = y2
-    }
+  constructor(x1, x2, y1, y2) {
+    (this.x1 = x1), (this.x2 = x2), (this.y1 = y1), (this.y2 = y2);
+  }
+}
+
+class Hero {
+  constructor(
+    sprite = "images/enemy-bug.png",
+    x = 10,
+    y = 200,
+    width = 101,
+    height = 83,
+    speed = 1
+  ) {
+    this.sprite = sprite;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
 }
 
 class Enemy {
@@ -26,9 +42,19 @@ class Enemy {
 
   update() {
     this.x += this.speed;
-    let rect1 = new Rectangle(this.x, this.x + this.width, this.y, this.y + this.height);
-    let rect2 = new Rectangle(player.x, player.x + player.width, player.y, player.y + player.height);
-       
+    let rect1 = new Rectangle(
+      this.x,
+      this.x + this.width,
+      this.y,
+      this.y + this.height
+    );
+    let rect2 = new Rectangle(
+      player.x,
+      player.x + player.width,
+      player.y,
+      player.y + player.height
+    );
+
     if (game.checkCollision(rect1, rect2)) {
       player.reset();
     }
@@ -45,14 +71,6 @@ class Enemy {
   setSpeed(speed) {
     this.speed = speed;
   }
-}
-
-function checkIntersection(x1, x2, x3, x4) {
-  return x3 > x1 ? x3 < x2 : x4 > x1;
-}
-
-function generateNumbers(n) {
-  return Math.floor(Math.random() * n) + 1;
 }
 
 class Player {
@@ -143,34 +161,34 @@ class Game {
     this.initialY = initialY;
   }
 
-  checkCollision = function(obj1, obj2) {
+  checkCollision(obj1, obj2) {
     return (
-      checkIntersection(obj1.x1, obj1.x2, obj2.x1, obj2.x2) &&
-      checkIntersection(obj1.y1, obj1.y2, obj2.y1, obj2.y2)
+      helpers.checkIntersection(obj1.x1, obj1.x2, obj2.x1, obj2.x2) &&
+      helpers.checkIntersection(obj1.y1, obj1.y2, obj2.y1, obj2.y2)
     );
-  }
+  };
 
   cloneHero(amount) {
     for (let i = 1; i <= amount; i++) {
-        allEnemies.push(new Enemy());
-      }
+      allEnemies.push(new Enemy());
+    }
+
+    allEnemies.map(item => {
+      item.setPosition(helpers.generateNumbers(300));
+      item.setSpeed(helpers.generateNumbers(5));
+      return item;
+    });
   }
 }
 
-
 let game = new Game();
 let canvas = new Canvas();
+let player = new Player();
 let allEnemies = [];
 
 game.cloneHero(game.amountEnemies);
 
-allEnemies.map(item => {
-  item.setPosition(generateNumbers(300));
-  item.setSpeed(generateNumbers(5));
-  return item;
-});
-
-let player = new Player();
+console.log(game);
 
 document.addEventListener("keyup", function(e) {
   let allowedKeys = {
