@@ -1,26 +1,8 @@
 import helpers from './helpers';
 
-
 class Rectangle {
   constructor(x1, x2, y1, y2) {
     (this.x1 = x1), (this.x2 = x2), (this.y1 = y1), (this.y2 = y2);
-  }
-}
-
-class Hero {
-  constructor(
-    sprite = "images/enemy-bug.png",
-    x = 10,
-    y = 200,
-    width = 101,
-    height = 83,
-    speed = 1
-  ) {
-    this.sprite = sprite;
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
   }
 }
 
